@@ -9,10 +9,9 @@ def DecideSeperator():
     sep : String seperator of directory.
     '''
 
-    pf = platform.system() # WindowsかMacか判別
-    print(type(pf))
-    print(pf)
-    sep = '' # ディレクトリのセパレータ
+    # Discrimination whether Windows or Mac.
+    pf = platform.system()
+    sep = ''
     if pf == 'Windows': # OS is Windows
         sep = '\\'
     elif pf == 'Darwin': # OS is Mac

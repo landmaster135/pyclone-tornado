@@ -2,7 +2,7 @@
 # code in shift-jis
 
 import os, sys
-# sys.path.append('{sep}LandmasterLibrary'.format(sep=sep))
+from tkinter import filedialog
 # IMPORT module FROM LandmasterLibrary
 import DirSeperator
 sep = DirSeperator.DecideSeperator() # String seperator of directory.
@@ -36,11 +36,13 @@ def MakeVertical(folderList):
     print("Rotate all page of PDF:", filename)
 
     original = PdfFileReader(filename)
-    rotated = PdfFileWriter()
+    rotated  = PdfFileWriter()
 
+    # Display number of pages of original PDF file
     sum_page = original.getNumPages()
     print("page_num: ", sum_page)
 
+    # Count pages at the same time as making vertical.
     sum_rotating_page = 0
     for i in range(0, sum_page, 1):
       print("Page ", i, " is ", original.getPage(i).get('/Rotate'), " degrees rotating")
@@ -49,8 +51,6 @@ def MakeVertical(folderList):
         sum_rotating_page += 1
       rotated.addPage(original.getPage(i).rotateClockwise(360 - angle_rotating))
 
-    # expect filename as "*.pdf"
-    # output_filename = filename.replace(".pdf", "_rotated.pdf")
     # new file entry
     output_filename = '{dirname}{sep}{basename}'.format(dirname=rotatedpath,sep=sep,basename=os.path.basename(filename))
     with open(output_filename, "wb") as outputStream:
@@ -64,4 +64,6 @@ def main(folderpath):
   MakeVertical(FileListGetter.GetFileList(folderpath))
 
 if __name__ == "__main__":
-  main("C:{sep}Users{sep}OCT--{sep}Dropbox{sep}ブログ{sep}Pythonの練習".format(sep=sep))
+  nowDir = os.path.abspath(os.path.dirname(__file__))
+  nowDirPath = filedialog.askdirectory(initialdir=nowDir)
+  main(nowDirPath)
