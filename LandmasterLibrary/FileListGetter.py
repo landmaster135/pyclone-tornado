@@ -27,7 +27,7 @@ def GetFileList(folderpath):
   return folderList
 
 def main(folderpath):
-    GetFileList(folderpath)
+  GetFileList(folderpath)
 
 if __name__ == "__main__":
   main(DirSeperator.DecideNowDir())
