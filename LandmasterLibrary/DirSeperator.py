@@ -11,12 +11,12 @@ def DecideNowFile():
   fileTypes   ： List type of file for choose file in the dialog
   moreFile    ： String extension
 
-  ext                     ： String extension
-  ext_by_semic            ： String extension in arrangement by semicolon (if Windows)
-  ext_by_list             ： String extension in arrangement by list (if Mac)
-  ext_by_tuple            ： String extension in arrangement by tuple (if Mac)
-  nowDir                  ： String absolutely path default folder
-  nowFilePath             ： String absolutely path selected file
+  ext          ： String extension
+  ext_by_semic ： String extension in arrangement by semicolon (if Windows)
+  ext_by_list  ： String extension in arrangement by list (if Mac)
+  ext_by_tuple ： String extension in arrangement by tuple (if Mac)
+  nowDir       ： String absolutely path default folder
+  nowFilePath  ： String absolutely path selected file
   '''
   list_of_ext = []
   # Number of extensions you can selecet is under 10.
