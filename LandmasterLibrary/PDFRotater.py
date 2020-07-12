@@ -3,8 +3,8 @@
 
 import os, sys
 # IMPORT module FROM LandmasterLibrary
-import DirSeperator
-sep = DirSeperator.DecideSeperator() # String seperator of directory.
+import DirEditor
+sep = DirEditor.DecideSeperator() # String seperator of directory.
 import FileListGetter
 
 def MakeVertical(folderList):
@@ -13,7 +13,7 @@ def MakeVertical(folderList):
   filename          : fullname of selected file.
   original          : PdfFileReader of original files.
   rotated           : PdfFileWriter of rotated files.
-  rotatedpath       : path of folder having rotated files.
+  rotated_dir       : path of folder having rotated files.
   sum_page          : sum of page.
   sum_rotating_page : rotating pages. count 1 if make their vertical.
   '''
@@ -23,13 +23,9 @@ def MakeVertical(folderList):
     filename = folderList[0]
   else:
     print('\nPDFRotater exits because of no target files.')
-    sys.exit()
+    sys.exit(0)
 
-  # new path entry
-  rotatedpath = '{dirname}{sep}{newpath}'.format(dirname=os.path.dirname(filename),sep=sep,newpath='_rotated')
-  # make new directory if new directory is none.
-  if os.path.isdir(rotatedpath) == False:
-    os.mkdir(rotatedpath)
+  rotated_dir = DirEditor.MakeDirectory(filename)
 
   for filename in folderList:
     print("Rotate all page of PDF:", filename)
@@ -51,16 +47,16 @@ def MakeVertical(folderList):
       rotated.addPage(original.getPage(i).rotateClockwise(360 - angle_rotating))
 
     # new file entry
-    output_filename = '{dirname}{sep}{basename}'.format(dirname=rotatedpath,sep=sep,basename=os.path.basename(filename))
+    output_filename = '{dirname}{sep}{basename}'.format(dirname=rotated_dir,sep=sep,basename=os.path.basename(filename))
     with open(output_filename, "wb") as outputStream:
       rotated.write(outputStream)
 
     print("\nPDFRotater is terminated.\nsum_rotating_page: ", sum_rotating_page, " / ", sum_page)
 
-  print('\n\nCheck new folder. "{}"'.format(rotatedpath))
+  print('\n\nCheck new folder. "{}"'.format(rotated_dir))
 
 def main(folderpath):
-  MakeVertical(FileListGetter.GetFileList(folderpath))
+  MakeVertical(FileListGetter.GetFileList(FileListGetter.DecideNowDir(),'pdf'))
 
 if __name__ == "__main__":
-  main(DirSeperator.DecideNowDir())
+  main()
