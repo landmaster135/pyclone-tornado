@@ -2,7 +2,6 @@
 # code in shift-jis
 
 import os, sys
-from tkinter import filedialog
 # IMPORT module FROM LandmasterLibrary
 import DirSeperator
 sep = DirSeperator.DecideSeperator() # String seperator of directory.
@@ -64,6 +63,4 @@ def main(folderpath):
   MakeVertical(FileListGetter.GetFileList(folderpath))
 
 if __name__ == "__main__":
-  nowDir = os.path.abspath(os.path.dirname(__file__))
-  nowDirPath = filedialog.askdirectory(initialdir=nowDir)
-  main(nowDirPath)
+  main(DirSeperator.DecideNowDir())

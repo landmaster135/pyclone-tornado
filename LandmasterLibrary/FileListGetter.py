@@ -2,8 +2,7 @@
 # code in shift-jis
 
 import glob2
-import os
-from tkinter import filedialog
+import os, sys
 # IMPORT module FROM LandmasterLibrary
 import DirSeperator
 sep = DirSeperator.DecideSeperator() # String seperator of directory.
@@ -14,6 +13,10 @@ def GetFileList(folderpath):
   ext        : extension
   folderlist : list about selected folder
   '''
+
+  if folderpath == '':
+    print("ERROR: No directory is selected.")
+    sys.exit()
 
   ext = 'pdf'
   folderList = glob2.glob('{folderpath}{sep}*.{ext}'.format(folderpath=folderpath,sep=sep,ext=ext))
@@ -27,6 +30,4 @@ def main(folderpath):
     GetFileList(folderpath)
 
 if __name__ == "__main__":
-  nowDir = os.path.abspath(os.path.dirname(__file__))
-  nowDirPath = filedialog.askdirectory(initialdir=nowDir)
-  main(nowDirPath)
+  main(DirSeperator.DecideNowDir())
