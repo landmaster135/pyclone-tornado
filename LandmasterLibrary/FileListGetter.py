@@ -66,7 +66,7 @@ def DecideExt(list_of_ext):
 def DecideNowFile(list_of_ext):
   '''
   list_of_ext ： List String extension
-  nowDir      ： String absolutely path of default folder
+  nowDir      ： String absolutely directory of default folder
   nowFilePath ： String absolutely path of selected file
   '''
   if list_of_ext == []:
@@ -80,7 +80,7 @@ def DecideNowFile(list_of_ext):
 
 def DecideNowDir():
   '''
-  nowDir     ： String absolutely path default folder
+  nowDir     ： String absolutely directory default folder
   nowDirPath ： String absolutely path selected folder
   '''
   nowDir = os.path.abspath(os.path.dirname(__file__))
@@ -100,6 +100,8 @@ def GetFileList(folderdir, ext):
     sys.exit(0)
 
   folderList = glob2.glob('{folderpath}{sep}*.{ext}'.format(folderpath=folderdir,sep=sep,ext=ext))
+  # sort order of list is irregulary if you use "glob"
+  list.sort(folderList, reverse=False)
   print('Get file list in this folder.\n"', folderdir, '"\n\n........................\n')
   # Get list about files.
   for file in folderList:
