@@ -7,6 +7,15 @@ import DirEditor
 sep = DirEditor.DecideSeperator() # String seperator of directory.
 import FileListGetter
 
+def WriteCSV(targetFile, targetList):
+    for m in range(0, len(targetList)):
+        # memorize to "should_not_exist_yubin.csv" sheet
+        if m != len(targetList) - 1:
+            targetFile.write("%s," % targetList[m])
+        else:
+            targetFile.write("%s" % targetList[m])
+    targetFile.write("\n")
+    
 def WriteText(fileName, nowList):
     '''
     fileName : String absolutely path of selected file
