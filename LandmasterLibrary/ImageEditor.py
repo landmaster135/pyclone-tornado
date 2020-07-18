@@ -4,6 +4,7 @@
 import os, sys
 import cv2 # opencv 3.4.2
 # IMPORT module FROM LandmasterLibrary
+import InputController
 import DirEditor
 sep = DirEditor.DecideSeperator() # String seperator of directory.
 import FileListGetter
@@ -203,9 +204,7 @@ def RemoveDuplication(folderList):
 
     extracted_dir = os.path.dirname(folderList[0])
     # Decide to remove or don't
-    isRmoveMode = 'a'
-    while isRmoveMode != 'y' and isRmoveMode != 'n':
-        isRmoveMode = input('You wanna remove files in condition? (y/n)')
+    isRmoveMode = InputController.RepeatInputWithMultiChoices('You wanna remove files in condition? (y/n)', ['y', 'n'])
 
     assessMode = 'a'
     listForText = []
@@ -232,7 +231,6 @@ def RemoveDuplication(folderList):
                 if match_rate >= border_line:
                     os.remove(folderList[i])
     # write to .txt file
-    # TextEditor.WriteText('{dirname}{sep}match_rate.txt'.format(dirname=extracted_dir,sep=sep), listForText)
     TextEditor.WriteText(DirEditor.GenerateFileName(extracted_dir, sep, 'match_rate.txt'), listForText)
 
     print('RemoveDuplication is terminated.\nCheck directory "{dirname}"'.format(dirname=extracted_dir))

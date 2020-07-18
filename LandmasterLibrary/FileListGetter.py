@@ -22,7 +22,6 @@ def ExtractFileName_BOOK():
     '''
     nowDir         = DirEditor.DecideNowDir()
     fileList       = GetFileList(nowDir,DirEditor.InputExtList(ext_range=1)[0])
-    # fileName       = InputController.RepeatInputWithMultiChoices('Please input filename to export.(with Extension) : ')
     ExportFileName = DirEditor.DecideSaveFileName(nowDir, ["csv"])
 
     dataListEXP = []
@@ -119,24 +118,24 @@ def EditFileName():
             elif ModeSelected == 'D' or ModeSelected == 'R':
                 AfterReplaceName = os.path.splitext(os.path.basename(i))[0].replace(TargetCharacterAlignment, ReplaceCharacterAlignment)
             targetFileName  = i
-            replaceFileName = GenerateFileName(os.path.dirname(i), sep, '{filename}.{ext}'.format(filename=AfterReplaceName,ext=ext))
-            # replaceFileName = '{dirname}{sep}{filename}.{ext}'.format(dirname=os.path.dirname(i),sep=sep,filename=AfterReplaceName,ext=ext)
+            replaceFileName = GenerateFileName(os.path.dirname(i), sep, '{filename}.{ext}'.format(filename=AfterReplaceName, ext=ext))
             os.rename(targetFileName, replaceFileName)
     else:
         sys.exit(0)
 
 def GetFileList(folderdir, ext):
     '''
-    folderdir  : Selected folder's absolutely directory.
-    ext        : extension
-    folderlist : list about selected folder
+    folderdir  : String selected folder's absolutely directory.
+    ext        : String extension
+    folderlist : List about selected folder
     '''
 
     if folderdir == '':
         print("ERROR: No directory is selected.")
         sys.exit(0)
 
-    folderList = glob2.glob('{folderpath}{sep}*.{ext}'.format(folderpath=folderdir,sep=sep,ext=ext))
+    folderList = glob2.glob(DirEditor.GenerateFileName(folderdir, sep, '*.{ext}'.format(ext=ext)))
+
     # sort order of list is irregulary if you use "glob"
     list.sort(folderList, reverse=False)
     print('Get file list in this folder.\n"', folderdir, '"\n\n........................\n')
@@ -146,8 +145,8 @@ def GetFileList(folderdir, ext):
     return folderList
 
 def main():
-    # test code for ExtractFileName_BOOK()
-    ExtractFileName_BOOK()
+    # # test code for ExtractFileName_BOOK()
+    # ExtractFileName_BOOK()
 
     # # test code for ConfirmExecution()
     # ConfirmExecution('a', 'b')
@@ -155,8 +154,8 @@ def main():
     # # test code for EditFileName()
     # EditFileName()
 
-    # # test code for GetFileList()
-    # GetFileList(DirEditor.DecideNowDir())
+    # test code for GetFileList()
+    GetFileList(DirEditor.DecideNowDir(), 'jpg')
 
 if __name__ == "__main__":
     main()

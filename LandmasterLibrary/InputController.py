@@ -3,21 +3,6 @@
 
 import os, sys
 
-# def RepeatInput(firstMessage):
-#     '''
-#     firstMessage : 
-#     inputChr     : 
-
-#     '''
-#     isInputCorrect = False
-#     isFirstInput   = True
-#     inputChr       = ''
-#     while isInputCorrect == False:
-#         if inputChr == '':
-#             isInputCorrect = True
-#             break
-#     inputChr = input(inputMessage)
-
 def RepeatInputWithMultiChoices(firstMessage, choiceList=[]):
     '''
     firstMessage   : String message for the first input.
