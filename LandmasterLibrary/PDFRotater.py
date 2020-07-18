@@ -47,7 +47,8 @@ def MakeVertical(folderList):
             rotated.addPage(original.getPage(i).rotateClockwise(360 - angle_rotating))
 
         # new file entry
-        output_filename = '{dirname}{sep}{basename}'.format(dirname=rotated_dir,sep=sep,basename=os.path.basename(filename))
+        # output_filename = '{dirname}{sep}{basename}'.format(dirname=rotated_dir, sep=sep, basename=os.path.basename(filename))
+        output_filename = DirEditor.GenerateFileName(rotated_dir, sep, os.path.basename(filename))
         with open(output_filename, "wb") as outputStream:
             rotated.write(outputStream)
 
@@ -55,8 +56,8 @@ def MakeVertical(folderList):
 
     print('\n\nCheck new folder. "{}"'.format(rotated_dir))
 
-def main(folderpath):
-    MakeVertical(FileListGetter.GetFileList(FileListGetter.DecideNowDir(),'pdf'))
+def main():
+    MakeVertical(FileListGetter.GetFileList(DirEditor.DecideNowDir(),'pdf'))
 
 if __name__ == "__main__":
     main()

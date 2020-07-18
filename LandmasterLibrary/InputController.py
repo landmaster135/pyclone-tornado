@@ -1,9 +1,24 @@
-# DirSeperator.py
+# InputController.py
 # code in shift-jis
 
 import os, sys
 
-def RepeatInputWithMultiChoices(firstMessage, choiceList):
+# def RepeatInput(firstMessage):
+#     '''
+#     firstMessage : 
+#     inputChr     : 
+
+#     '''
+#     isInputCorrect = False
+#     isFirstInput   = True
+#     inputChr       = ''
+#     while isInputCorrect == False:
+#         if inputChr == '':
+#             isInputCorrect = True
+#             break
+#     inputChr = input(inputMessage)
+
+def RepeatInputWithMultiChoices(firstMessage, choiceList=[]):
     '''
     firstMessage   : String message for the first input.
     choiceList     : List of String choice.
@@ -22,19 +37,29 @@ def RepeatInputWithMultiChoices(firstMessage, choiceList):
             inputMessage = firstMessage
         else:
             # Create message.
-            inputMessage = 'Retry. [ "'
-            for i in range(0, len(choiceList)):
-                if i == 0:
-                    inputMessage += '{choice}"'.format(choice=choiceList[i])
-                else:
-                    inputMessage += ' or "{choice}"'.format(choice=choiceList[i])
-            inputMessage += ' ]: '
+            inputMessage = 'Retry.'
+            if choiceList == []:
+                pass
+            else:
+                inputMessage += ' [ "'
+                for i in range(0, len(choiceList)):
+                    if i == 0:
+                        inputMessage += '{choice}"'.format(choice=choiceList[i])
+                    else:
+                        inputMessage += ' or "{choice}"'.format(choice=choiceList[i])
+                inputMessage += ' ]: '
         inputChr = input(inputMessage)
         # Check by message.
-        for choice in choiceList:
-            if inputChr == choice:
+        if inputChr == '':
+            pass
+        else:
+            if choiceList == []:
                 isInputCorrect = True
-                break
+            else:
+                for choice in choiceList:
+                    if inputChr == choice:
+                        isInputCorrect = True
+                        break
         isFirstInput = False
     return inputChr
 

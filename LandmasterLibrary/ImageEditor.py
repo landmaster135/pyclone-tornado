@@ -232,7 +232,9 @@ def RemoveDuplication(folderList):
                 if match_rate >= border_line:
                     os.remove(folderList[i])
     # write to .txt file
-    TextEditor.WriteText('{dirname}{sep}match_rate.txt'.format(dirname=extracted_dir,sep=sep), listForText)
+    # TextEditor.WriteText('{dirname}{sep}match_rate.txt'.format(dirname=extracted_dir,sep=sep), listForText)
+    TextEditor.WriteText(DirEditor.GenerateFileName(extracted_dir, sep, 'match_rate.txt'), listForText)
+
     print('RemoveDuplication is terminated.\nCheck directory "{dirname}"'.format(dirname=extracted_dir))
 
 def ExtractImage(video_name):
@@ -273,19 +275,19 @@ def ExtractImage(video_name):
 def main():
     # # test code for SelectArea()
     # list_of_ext = ["jpg"]
-    # SelectArea(FileListGetter.DecideNowFile(list_of_ext))
+    # SelectArea(DirEditor.DecideNowFile(list_of_ext))
 
     # # test code for TrimImage()
-    # fileList = FileListGetter.GetFileList(FileListGetter.DecideNowDir(),'jpg')
+    # fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
     # TrimImage(fileList)
 
     # test code for RemoveDuplication()
-    fileList = FileListGetter.GetFileList(FileListGetter.DecideNowDir(),'jpg')
+    fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
     RemoveDuplication(fileList)
 
     # # test code for ExtractImage()
     # list_of_ext = ["mp4"]
-    # ExtractImage(FileListGetter.DecideNowFile(list_of_ext))
+    # ExtractImage(DirEditor.DecideNowFile(list_of_ext))
 
 if __name__ == "__main__":
     main()
