@@ -6,17 +6,17 @@ from tkinter import filedialog
 # IMPORT module FROM LandmasterLibrary
 import InputController
 
-def DecideSaveFileName(nowDir, list_of_ext):
+def DecideSaveFileName(dirname, list_of_ext):
     '''
-    list_of_ext : List String extension
-    nowDir      : String absolutely directory of default folder
+    list_of_ext  : List String extension
+    dirname      : String absolutely directory of default folder
     saveFilePath : String absolutely path of selected file
     '''
     if list_of_ext == []:
         list_of_ext = InputExtList()
     else:
         pass
-    saveFilePath = filedialog.asksaveasfilename(filetypes=DecideExt(list_of_ext), initialdir=nowDir ,title = "Save As")
+    saveFilePath = filedialog.asksaveasfilename(filetypes=DecideExt(list_of_ext), initialdir=dirname ,title = "Save As")
     print("File's Absolutely Path: {quotation}{filepath}{quotation}".format(quotation='"',filepath=saveFilePath))
     return saveFilePath
 
@@ -96,7 +96,7 @@ def DecideExt(list_of_ext):
     elif pf == 'Darwin': # OS is Mac
         # wanted to make like this...  ex. fileTypes = [("csv files","*.csv"),("txt files","*.txt")]
         for ext in list_of_ext:
-            ext_by_list = ['{ext} files'.format(ext=ext),'*.{ext}'.format(ext=ext)]
+            ext_by_list  = ['{ext} files'.format(ext=ext),'*.{ext}'.format(ext=ext)]
             ext_by_tuple = tuple(ext_by_list)
             if ext == list_of_ext[0]:
                 fileTypes = [ext_by_tuple]

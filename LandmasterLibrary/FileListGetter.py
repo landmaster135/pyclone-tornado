@@ -78,9 +78,8 @@ def EditFileName():
     targetFileName               : String absolutely target filename.
     replaceFileName              : String absolutely replaced filename.
     '''
-    sep = DecideSeperator()
     ext = input('What Extension? (without ".") : ')
-    fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(), ext)
+    fileList = GetFileList(DirEditor.DecideNowDir(), ext)
     inputMessage = 'Select mode. [ A: Add, D: Delete, R: Replace, E: Exit ]'
     ModeSelected = InputController.RepeatInputWithMultiChoices(inputMessage, ['A', 'D', 'R', 'E'])
     if ModeSelected == 'E':
