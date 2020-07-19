@@ -10,6 +10,39 @@ import DirEditor
 sep = DirEditor.DecideSeperator() # String seperator of directory.
 import TextEditor
 
+def ExtractPlaylist(folderList):
+    '''
+    folderList    : List of file filtered with extension in the selected folder.
+    fileName      : String absolutely filename.
+    extracted_dir : String directory to save file exported extracted data.
+    inputMessage  : String message at the time of inputting type of file.
+    PlaylistType  : String type of playlist.
+    typeList      : List of String.
+    '''
+    if len(folderList) != 0:
+        fileName = folderList[0]
+    else:
+        print('\nFileListGetter.ExtractPlaylist exits because of no target files.')
+        sys.exit(0)
+
+    extracted_dir = DirEditor.MakeDirectory(fileName)
+
+    inputMessage = 'Select type of playlist.\n[ 0: Windows, 1: Walkman, 2: Android ]'
+    PlaylistType = InputController.RepeatInputWithMultiChoices(inputMessage, ['0', '1', '2'])
+    typeList     = {'0': 'Windows', '1': 'Walkman', '2': 'Android'}
+    print('You selected for "{}"'.format(typeList[PlaylistType]))
+
+    # --- memorandum ---
+    # os.chdir(os.path.dirname(os.path.abspath(__file__))) # 実行ファイルのディレクトリに移動
+    # if fileName[:-4] != '.txt':
+    #     fileName = input('それでは、基となるテキストファイル名を入力して下さい。')
+
+    for fileName in folderList:
+        TextEditor.WritePlaylist(fileName, extracted_dir, PlaylistType)
+
+    print('FileListGetter.ExtractPlaylist is terminated.')
+    print('Check directory "{dirname}"'.format(dirname=extracted_dir))
+
 def ExtractFileName_BOOK():
     '''
     nowDir         : String name of now direcotry.
@@ -36,7 +69,7 @@ def ExtractFileName_BOOK():
     for data in dataListEXP:
         TextEditor.WriteCSV(ExportFileName, data)
 
-    print('ExtractFileName_BOOK is terminated')
+    print('ExtractFileName_BOOK is terminated.')
     print('Check directory "{dirname}"'.format(dirname=ExportFileName))
 
 def ConfirmExecution(target, replace):
@@ -144,6 +177,9 @@ def GetFileList(folderdir, ext):
     return folderList
 
 def main():
+    # test code for ExtractPlaylist()
+    ExtractPlaylist(GetFileList(DirEditor.DecideNowDir(),'txt'))
+
     # # test code for ExtractFileName_BOOK()
     # ExtractFileName_BOOK()
 
@@ -153,8 +189,8 @@ def main():
     # # test code for EditFileName()
     # EditFileName()
 
-    # test code for GetFileList()
-    GetFileList(DirEditor.DecideNowDir(), 'jpg')
+    # # test code for GetFileList()
+    # GetFileList(DirEditor.DecideNowDir(), 'jpg')
 
 if __name__ == "__main__":
     main()
