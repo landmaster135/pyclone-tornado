@@ -191,7 +191,7 @@ def JudgeMatchRateByPixelMatch(fileName1, fileName2):
 
 def RemoveDuplication(folderList):
     '''
-    folderList    : List, String absolutely path, of file filtered with extension in the selected folder.
+    folderList    : List String absolutely path, of file filtered with extension in the selected folder.
     extracted_dir : String absolutely path of directory has selected file
     match_rate    : Float rate
     border_line   : border line
