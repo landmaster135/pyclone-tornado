@@ -1,0 +1,271 @@
+nav .navbar-brand {
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* colors for brand */
+nav .navbar-brand .blue {
+    color: #537fbe;
+}
+nav .navbar-brand .red {
+    color: #ea433b;
+}
+nav .navbar-brand .yellow {
+    color: #f5b82e;
+}
+nav .navbar-brand .green {
+    color: #2e944b;
+}
+nav .navbar-brand .orange {
+    color: #ffa500;
+}
+div .body-brand .red {
+    color: #ea433b;
+}
+div .body-brand  .blue {
+    color: #537fbe;
+}
+
+main .form-control {
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width : auto;
+    height: auto;
+}
+
+main {
+    /* scroll horizontally as needed */
+    overflow-x      : auto;
+    /* center contents */
+    text-align      : center;
+    /* background color */
+    background-color: #ffffff;
+}
+
+main img {
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+input {
+    margin: .6rem;
+}
+.wardrobes1 {
+    margin: 1rem 0rem;
+    width : 5rem;
+    height: 27rem;
+}
+.wardrobes-list {
+    width : 1.6rem;
+    height: 1.6rem;
+}
+.wardrobes-page {
+    width : 3.6rem;
+    height: 3.6rem;
+}
+.weather {
+    margin: 5rem  1rem;
+}
+.weather-page {
+    width     : auto;
+    height    : auto;
+    max-width : 5.0rem;
+    max-height: 5.0rem;
+}
+.wrapper .column{
+    margin: 0.5rem 0.6rem;
+}
+.temperature{
+    margin: 0.5rem 1rem;
+}
+.manekin1{
+    margin: 3rem auto;
+    width : 10rem;
+    height: 22rem;
+}
+.outline {
+    margin : 0.5rem auto;
+    width  : 70%;
+    padding: 1rem;
+}
+.outline .message {
+    display      : inline-block;
+    border-bottom: solid 2px coral;
+    margin       : 1rem;
+}
+.outline .notice {
+    /*background-color:*/
+    /*background-color: rgba(132, 190, 66, 0.10);*/
+    background: #ffc7af;
+    color     : #ff4500;
+    /*margin    : 2rem;*/
+    padding   : 0rem 1rem;
+}
+
+@media all and (min-width: 500px) {
+    .wrapper {
+        display        : flex;
+        justify-content: center;
+    }
+}
+
+/* button */
+.button {
+    display       : inline-block;
+    border-radius : 5%;          /* 角丸       */
+    font-size     : 12pt;        /* 文字サイズ */
+    text-align    : center;      /* 文字位置   */
+    font-weight   : bold;        /* 文字太さ   */
+    cursor        : pointer;     /* カーソル   */
+    padding       : 12px 19px;   /* 余白       */
+    line-height   : 1em;         /* 1行の高さ  */
+    transition    : .3s;         /* なめらか変化 */
+    box-shadow    : 3px 3px 5px #666666;  /* 影の設定 */
+}
+.button-orange {
+    background    : #ff7f00;     /* 背景色     */
+    color         : #ffffff;     /* 文字色     */
+    border        : 2px solid #ff7f00;    /* 枠の指定 */
+}
+.button-orange:hover {
+    box-shadow    : none;        /* カーソル時の影消去 */
+    color         : #ff7f00;     /* 背景色     */
+    background    : #ffffff;     /* 文字色     */
+}
+
+.button-green {
+    background    : #00b300;     /* 背景色     */
+    color         : #f7f7f7;     /* 文字色     */
+    border        : 2px solid #00b300;    /* 枠の指定 */
+}
+.button-green:hover {
+    box-shadow    : none;        /* カーソル時の影消去 */
+    color         : #00b300;     /* 背景色     */
+    background    : #f7f7f7;     /* 文字色     */
+}
+.button-gray {
+    background    : #999999;     /* 背景色     */
+    color         : #ffffff;     /* 文字色     */
+    border        : 2px solid #999999;    /* 枠の指定 */
+}
+.button-gray:hover {
+    box-shadow    : none;        /* カーソル時の影消去 */
+    color         : #999999;     /* 背景色     */
+    background    : #ffffff;     /* 文字色     */
+}
+
+/* radio */
+.radioArea input[type="radio"] {
+    width         : 6rem;        /* 大きさ：横 */
+    height        : 3rem;        /* 大きさ：縦 */
+    vertical-align: middle;      /* 並び位置   */
+    display       : none;        /* チェックボックス非表示 */
+}
+ /* --- チェックボックス直後のlabelの色以外について --- */
+.radioArea input[type="radio"] + label {
+    padding       : 0.5rem 1.5rem;                   /* labelの余白 */
+    font-size     : 13pt;                       /* labelの文字サイズ */
+    font-weight   : bold;                       /* 文字太さ   */
+    border-radius : 0px;                        /* labelの角丸 */
+    cursor        : pointer;                    /* カーソル設定 */
+    transition    : .2s;                        /* なめらか変化 */
+
+    /*background-color: pink; /*テスト*/
+}
+/* --- チェックボックス直後のlabelの色について --- */
+.radioArea-green input[type="radio"] + label {
+    border        : 2px solid #00b300;          /* labelの枠線 */
+    background    : #ffffff;                    /* labelの背景 */
+}
+/* --- 選択されたチェックボックス直後のlabelの色について --- */
+.radioArea-green input[type="radio"]:checked + label {
+    color         : rgba(256, 256, 256, 100);
+    background    : #00b300;                    /* labelの背景 */
+}
+/* --- 選択されていないチェックボックス直後のlabelにマウスが乗った(色について) --- */
+.radioArea-green input[type="radio"]:not(:checked) + label:hover {
+    background    : rgba(0, 179, 0, 0.40);     /* labelの背景 */
+}
+/* range */
+input[type="range"]{
+    -webkit-appearance:none;
+    background   : #ffffff;
+    height       : 24px;
+    width        : 240px;
+    border-radius: 8px;
+}
+input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    height       : 20px;
+    width        : 20px;
+    border-radius: 50%;
+    background   : #00b300;
+}
+input[type=range]::-moz-range-track{
+    height       : 5rem;
+}
+output {
+    /*position: absolute;*/
+    top        : 25%;
+    left       : 0;
+    text-align : center;
+    width      : 100%;
+    font-size  : 18pt;
+    font-family: 'Advent Pro', sans-serif;
+    color      : rgba(132, 190, 66, 1);
+}
+.output_w {
+    padding: 0.2rem 0.2rem 0.2rem 23rem;
+}
+.output_f {
+    padding: 0.2rem 0.2rem 0.2rem 17rem;
+}
+/* file */
+input[type="file"] {
+    display: none;
+}
+label#file-label{
+    background   : rgba(132, 190, 66, 1);   /* labelの背景 */
+    color        : #ffffff;  /* labelの文字の色 */
+    padding      : 1rem;
+    border-radius: 0.5rem;                      /* 境界線の丸っこさ */
+    display      : inline-block;              /* block要素にする */
+}
+label#file-label:hover{
+    background: rgba(132, 190, 66, 0.10);     /* labelの背景 */
+    color     : #84bd42
+}
+/* ファイルをアップしていない時の挙動 */
+label#file-label::after {
+    font-size  : 13pt;
+    height     : 20px;
+    line-height: 20px;
+    margin     : 0rem;
+    top        : calc(50% - 10px);
+    content    :"Update wardrobe-image ?";
+}
+/* ファイルをアップした際の挙動 */
+label.changed#file-label::after {
+    font-size    : 13pt;
+    content      : "Keeping.";
+    padding      : 1rem;
+    border-radius: 0.5rem;
+}
+label.changed#file-label:hover{
+    background: rgba(132, 190, 66, 0.10);     /* labelの背景 */
+    color     : #84bd42
+}
+.filename {
+    font-size: 13pt;
+    color    : rgba(0, 120, 0, 0.80);;
+}
+.alert {
+    font-size: 13pt;
+    color    : rgba(235, 59, 47, 0.90);;
+}
+
+footer {
+    background-color: #ececec;
+}
