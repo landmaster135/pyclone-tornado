@@ -3,7 +3,7 @@ import json
 import datetime
 # from cs50 import SQL
 import sqlite3
-from contextlib import closing
+# from contextlib import closing
 from flask import Flask, redirect, render_template, request, session, json, jsonify, Markup
 from flask_session import Session
 from tempfile import mkdtemp
@@ -14,8 +14,8 @@ import shutil
 from PIL import Image, ImageFilter
 
 import pandas as pd
-from sklearn.linear_model import LinearRegression, ElasticNet
-from sklearn.model_selection import train_test_split
+# from sklearn.linear_model import LinearRegression, ElasticNet
+# from sklearn.model_selection import train_test_split
 
 from helpers import login_required, usd, get_weather_info, db_dictionary, category_dictionary, sleeve_list, color_dictionary, save_image, model_learning, apology
 
@@ -102,18 +102,20 @@ def index():
                       "wardrobeid_i": "", "wardrobeid_b": "", "wardrobeid_s": ""
                      }
     # Message to display
-    today_message = ""
+    today_message  = ""
     notice_message = ""
     print(rows_hw)
     
     # Variable to assess whether wardrobe is selected today
     have_selected = False
     # Display the wardrobes selected today
-    if rows_hw == None: # if wardrobe haven't been selected yet,
+    # if wardrobe haven't been selected yet,
+    if rows_hw == None:
         for key in dict_image_url.keys():
             dict_image_url[key] = nowardrobe_path
             today_message ="Not selected outfit today yet"
-    else: # if wardrobe have been selected,
+    # if wardrobe have been selected,
+    else:
         if rows_hw[column_history_wear["comfort_score"]] != None:
             notice_message = "You have input comfort today."
         for key in dict_image_url.keys(): # if a wardrobe isn't selected,
@@ -560,17 +562,17 @@ def decided():
     # Insert DB for history
     num_shift = 2
     cursor.execute("INSERT INTO history_wear({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}) VALUES ({10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19});".format(
-                    "userid", "wardrobeid_c", "wardrobeid_o", "wardrobeid_t", "wardrobeid_i",
-                    "wardrobeid_b", "wardrobeid_s", "wear_date", "temperature_max", "temperature_min",
-                    ":t_userid", ":t_wardrobeid_c", ":t_wardrobeid_o", ":t_wardrobeid_t", ":t_wardrobeid_i",
-                    ":t_wardrobeid_b", ":t_wardrobeid_s", ":t_wear_date", ":t_temperature_max", ":t_temperature_min"),
-                    {'t_userid': int(session["user_id"]),
-                     't_wardrobeid_c': list_history_wear[column_history_wear['wardrobeid_c'] - num_shift],
-                     't_wardrobeid_o': list_history_wear[column_history_wear['wardrobeid_o'] - num_shift],
-                     't_wardrobeid_t': list_history_wear[column_history_wear['wardrobeid_t'] - num_shift],
-                     't_wardrobeid_i': list_history_wear[column_history_wear['wardrobeid_i'] - num_shift],
-                     't_wardrobeid_b': list_history_wear[column_history_wear['wardrobeid_b'] - num_shift],
-                     't_wardrobeid_s': list_history_wear[column_history_wear['wardrobeid_s'] - num_shift],
+                    "userid"         , "wardrobeid_c"   , "wardrobeid_o"   , "wardrobeid_t"      , "wardrobeid_i",
+                    "wardrobeid_b"   , "wardrobeid_s"   , "wear_date"      , "temperature_max"   , "temperature_min",
+                    ":t_userid"      , ":t_wardrobeid_c", ":t_wardrobeid_o", ":t_wardrobeid_t"   , ":t_wardrobeid_i",
+                    ":t_wardrobeid_b", ":t_wardrobeid_s", ":t_wear_date"   , ":t_temperature_max", ":t_temperature_min"),
+                    {'t_userid'         : int(session["user_id"]),
+                     't_wardrobeid_c'   : list_history_wear[column_history_wear['wardrobeid_c'] - num_shift],
+                     't_wardrobeid_o'   : list_history_wear[column_history_wear['wardrobeid_o'] - num_shift],
+                     't_wardrobeid_t'   : list_history_wear[column_history_wear['wardrobeid_t'] - num_shift],
+                     't_wardrobeid_i'   : list_history_wear[column_history_wear['wardrobeid_i'] - num_shift],
+                     't_wardrobeid_b'   : list_history_wear[column_history_wear['wardrobeid_b'] - num_shift],
+                     't_wardrobeid_s'   : list_history_wear[column_history_wear['wardrobeid_s'] - num_shift],
                      't_wear_date'      : list_history_wear[column_history_wear['wear_date'] - num_shift],
                      't_temperature_max': list_history_wear[column_history_wear['temperature_max'] - num_shift],
                      't_temperature_min': list_history_wear[column_history_wear['temperature_min'] - num_shift]
@@ -629,10 +631,10 @@ def catalogcloth():
     # List up Catalog Cloth
     list_cloth = []
     for i in rows:
-        list_cloth.append({"id": i[column_wardrobes["id"]],
-                           "name": i[column_wardrobes["wardrobename"]],
+        list_cloth.append({"id"       : i[column_wardrobes["id"]],
+                           "name"     : i[column_wardrobes["wardrobename"]],
                            "warmscore": i[column_wardrobes["warmscore"]],
-                           "img_url": os.path.join("..", image_path, str(session["user_id"]), "{}.jpg".format(i[column_wardrobes["wardrobename"]]))
+                           "img_url"  : os.path.join("..", image_path, str(session["user_id"]), "{}.jpg".format(i[column_wardrobes["wardrobename"]]))
                           })
     # Forget which page user is in now (for ajax)
     session["nowpage"] = ""
@@ -699,7 +701,7 @@ def checkcloth():
         if wardrobename_s == "--Select Spats--" or wardrobename_s == wardrobename_b:
             return_json['message'] = "Spats category is invalid"
             num_empty += 1
-        
+
         # e = jsonify(json.dumps(return_json));
         # jsonファイルにフォーマットする。
         if num_empty == 6: # If there is invalid input,
