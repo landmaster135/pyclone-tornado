@@ -12,6 +12,8 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression, ElasticNet
 from sklearn.model_selection import train_test_split
 
+import pickle
+
 def login_required(f):
     """
     Decorate routes to require login.
@@ -171,6 +173,10 @@ def model_learning(data):
         data.drop("comfort_score", axis=1), data["comfort_score"], random_state=42)
     model = LinearRegression()
     model.fit(train_X, train_y)
+
+    # save model as .sav file
+    pickle.dump(model, open('comfort_model.sav', 'wb'))
+
     print(test_X)
     # print(model.predict(test_X))
     print("線形重回帰：{}".format("comfort_score")) # データ列
