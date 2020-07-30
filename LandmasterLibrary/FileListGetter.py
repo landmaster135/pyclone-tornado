@@ -150,7 +150,7 @@ def EditFileName():
             elif ModeSelected == 'D' or ModeSelected == 'R':
                 AfterReplaceName = os.path.splitext(os.path.basename(i))[0].replace(TargetCharacterAlignment, ReplaceCharacterAlignment)
             targetFileName  = i
-            replaceFileName = GenerateFileName(os.path.dirname(i), sep, '{filename}.{ext}'.format(filename=AfterReplaceName, ext=ext))
+            replaceFileName = DirEditor.GenerateFileName(os.path.dirname(i), sep, '{filename}.{ext}'.format(filename=AfterReplaceName, ext=ext))
             os.rename(targetFileName, replaceFileName)
     else:
         sys.exit(0)
@@ -177,8 +177,8 @@ def GetFileList(folderdir, ext):
     return folderList
 
 def main():
-    # test code for ExtractPlaylist()
-    ExtractPlaylist(GetFileList(DirEditor.DecideNowDir(),'txt'))
+    # # test code for ExtractPlaylist()
+    # ExtractPlaylist(GetFileList(DirEditor.DecideNowDir(),'txt'))
 
     # # test code for ExtractFileName_BOOK()
     # ExtractFileName_BOOK()
@@ -186,8 +186,8 @@ def main():
     # # test code for ConfirmExecution()
     # ConfirmExecution('a', 'b')
 
-    # # test code for EditFileName()
-    # EditFileName()
+    # test code for EditFileName()
+    EditFileName()
 
     # # test code for GetFileList()
     # GetFileList(DirEditor.DecideNowDir(), 'jpg')
