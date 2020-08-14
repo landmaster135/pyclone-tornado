@@ -2,10 +2,9 @@
 ##### This repogitory has codes in Python.
 
 - - -
-### Extension of each Service
+### Outline of each directory
 
-##### - &nbsp; '.vba' : for Visual Basic for Application on Excel
-##### - &nbsp; '.gs' &nbsp;: for Google Apps Script on Google Spreadsheet
-##### - &nbsp; '.gh' &nbsp;: for Grasshopper for Rhinoceros
+##### - &nbsp; 'LandmasterLibrary' : library having various fuction
+##### - &nbsp; 'WardrobeMaster' &nbsp;&emsp;: recording wearing and recommending wardrobe on a day
 ***
 
