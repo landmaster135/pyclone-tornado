@@ -84,34 +84,39 @@ def SelectArea(filename):
     print("FrameSize for trimming is ", frameDict)
     return frameDict
 
-def TrimImage(folderList):
+def TrimImage(trimmed_img_ext):
     '''
-    folderList    : List of file filtered with extension in the selected folder.
-    selectTimes   : String of times to input.
-    extracted_dir : String absolutely path of directory has selected file.
-    img           : Dictionary of pixels of image. (img [height] [width] [color channel])
-    trimmed_img   : Dictionary of pixels of image.
+    folderList       : List of file filtered with extension in the selected folder.
+    selectTimes      : String of times to input.
+    extracted_dir    : String absolutely path of directory has selected file.
+    img              : Dictionary of pixels of image. (img [height] [width] [color channel])
+    trimmed_img      : Dictionary of pixels of image.
+    trimmed_img_ext : String of extension of trimmed_img.
+    trimmed_img_name : String of filename of trimmed_img.
     '''
-    if len(folderList) == 0:
-        print('\nVideoExtractor exits because of no target files.')
+    fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),trimmed_img_ext)
+
+    if len(fileList) == 0:
+        print('\nImageEditor exits because of no target files.')
         sys.exit(0)
 
     selectTimes = input('What times do you choosing? ("1" or "every"): ')
     while selectTimes != '1' and selectTimes != 'every':
         selectTimes = input('Retry. ("1" or "every"): ')
-    extracted_dir = DirEditor.MakeDirectory(folderList[0])
+    extracted_dir = DirEditor.MakeDirectory(fileList[0])
 
-    for i in range(0, len(folderList)):
-        img = cv2.imread(folderList[i])
+    for i in range(0, len(fileList)):
+        img = cv2.imread(fileList[i])
         if selectTimes == '1':
             if i == 0:
-                frameDict = SelectArea(folderList[i])
+                frameDict = SelectArea(fileList[i])
         elif selectTimes == 'every':
-            frameDict = SelectArea(folderList[i])
+            frameDict = SelectArea(fileList[i])
         # img[top : bottom, left : right]
-        trimmed_img = img[frameDict['top'] : frameDict['bottom'], frameDict['left'] : frameDict['right']]
-        cv2.imwrite("{dirname}{sep}image{num:0=3}.jpg".format(dirname=extracted_dir,sep=sep,num=i), trimmed_img)
-        print("saved: image{num:0=3}.jpg".format(num=i))
+        trimmed_img      = img[frameDict['top'] : frameDict['bottom'], frameDict['left'] : frameDict['right']]
+        trimmed_img_name = "image{num:0=3}.{trimmed_img_ext}".format(num=i,trimmed_img_ext=trimmed_img_ext)
+        cv2.imwrite("{dirname}{sep}{trimmed_img_name}".format(dirname=extracted_dir,sep=sep,trimmed_img_name=trimmed_img_name), trimmed_img)
+        print("saved: {trimmed_img_name}".format(trimmed_img_name=trimmed_img_name))
     print('Check directory "{dirname}"'.format(dirname=extracted_dir))
 
 def JudgeMatchRateByFeaturePoint(fileName1, fileName2):
@@ -199,7 +204,7 @@ def RemoveDuplication(folderList):
     border_line = 70
 
     if len(folderList) == 0:
-        print('\nVideoExtractor exits because of no target files.')
+        print('\nImageEditor exits because of no target files.')
         sys.exit(0)
 
     extracted_dir = os.path.dirname(folderList[0])
@@ -276,12 +281,11 @@ def main():
     # SelectArea(DirEditor.DecideNowFile(list_of_ext))
 
     # # test code for TrimImage()
-    # fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
-    # TrimImage(fileList)
+    TrimImage('jpg')
 
     # test code for RemoveDuplication()
-    fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
-    RemoveDuplication(fileList)
+    # fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
+    # RemoveDuplication(fileList)
 
     # # test code for ExtractImage()
     # list_of_ext = ["mp4"]
