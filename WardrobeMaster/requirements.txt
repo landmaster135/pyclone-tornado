@@ -1,5 +1,6 @@
 ###### Requirements without Version Specifiers ######
 flask
 werkzeug
+tempfile
 functools
 sklearn
