@@ -64,7 +64,7 @@ nowardrobe_path = os.path.join(image_path, "NoWardrobe.jpg")
 # Folder for material
 material_path = os.path.join("static", "material")
 # Directory for temporary wardrobe-image
-temp_directory = "temp"
+temp_directory = ""
 
 
 @app.route("/")
@@ -290,7 +290,7 @@ def registered():
         row = cursor.fetchall()
 
         # Make a folder to hold user's wardrobe-image
-        image_id_path = os.path.join(image_path, row[0][column_users["id"]])
+        image_id_path = os.path.join(image_path, str(row[0][column_users["id"]]))
         if not os.path.exists(image_id_path):
             os.mkdir(image_id_path)
             os.mkdir(os.path.join(image_id_path, temp_directory))
