@@ -64,7 +64,7 @@ nowardrobe_path = os.path.join(image_path, "NoWardrobe.jpg")
 # Folder for material
 material_path = os.path.join("static", "material")
 # Directory for temporary wardrobe-image
-temp_directory = ""
+temp_directory = "temp"
 
 
 @app.route("/")
