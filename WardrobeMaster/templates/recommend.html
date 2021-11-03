@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recommend
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h1>Recommend</h1>
+    </div>
+    <div class="outline">
+        <h5 class="message">Today's Recommend for You !</h5>
+        <!-- おすすめを表示 -->
+        <div class="wrapper">
+            <div class="column">
+                <p><img src="../static/material/Stickperson_m1.png" alt="" class="manekin1"></p>
+            </div>
+            <div class="column">
+                <div class="wardrobes1">
+                    <p><img src="{{img_urls.wardrobeid_c}}" alt="", title={{names.wardrobeid_c}} class="wardrobes-page"/></p>
+                    <p><img src="{{img_urls.wardrobeid_o}}" alt="", title={{names.wardrobeid_o}} class="wardrobes-page"/></p>
+                    <p><img src="{{img_urls.wardrobeid_t}}" alt="", title={{names.wardrobeid_t}} class="wardrobes-page"/></p>
+                    <p><img src="{{img_urls.wardrobeid_i}}" alt="", title={{names.wardrobeid_i}} class="wardrobes-page"/></p>
+                    <p><img src="{{img_urls.wardrobeid_b}}" alt="", title={{names.wardrobeid_b}} class="wardrobes-page"/></p>
+                    <p><img src="{{img_urls.wardrobeid_s}}" alt="", title={{names.wardrobeid_s}} class="wardrobes-page"/></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="outline">
+        <h5 class="message">What's your outfit today?</h5>
+    </div>
+    <div class="outline">
+        <form action="/decided" method="post" name="clothform">
+            <div class="form-group" id="">
+                <select autofocus class="form-control" name="wardrobename_c">
+                    <option style="display: none;">--Select Coat--</option>
+                    <option disabled>--Select Coat--</option>
+                    {% for wardrobe in wardrobes.c %}
+                        <option>{{ wardrobe }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" id="">
+                <select autofocus class="form-control" name="wardrobename_o">
+                    <option style="display: none;">--Select Outer--</option>
+                    <option disabled>--Select Outer--</option>
+                    {% for wardrobe in wardrobes.o %}
+                        <option>{{ wardrobe }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" id="">
+                <select autofocus class="form-control" name="wardrobename_t">
+                    <option style="display: none;">--Select Tops--</option>
+                    <option disabled>--Select Tops--</option>
+                    {% for wardrobe in wardrobes.t %}
+                        <option>{{ wardrobe }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" id="">
+                <select autofocus class="form-control" name="wardrobename_i">
+                    <option style="display: none;">--Select Inner--</option>
+                    <option disabled>--Select Inner--</option>
+                    {% for wardrobe in wardrobes.i %}
+                        <option>{{ wardrobe }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" id="">
+                <select autofocus class="form-control" name="wardrobename_b">
+                    <option style="display: none;">--Select Bottoms--</option>
+                    <option disabled>--Select Bottoms--</option>
+                    {% for wardrobe in wardrobes.b %}
+                        <option>{{ wardrobe }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" id="">
+                <select autofocus class="form-control" name="wardrobename_s">
+                    <option style="display: none;">--Select Spats--</option>
+                    <option disabled>--Select Spats--</option>
+                    {% for wardrobe in wardrobes.s %}
+                        <option>{{ wardrobe }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="form-alert" class="form-group">
+                <span class="alert"></span>
+            </div>
+            <input type="submit" class="button button-orange" id="button-submit" value="OK">
+        </form>
+    </div>
+
+{% endblock %}

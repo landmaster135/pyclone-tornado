@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit User
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h1>Edit UserInfo</h1>
+    </div>
+    <form action="/register" method="post" id="form">
+        <div class="form-group" id="username">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" id="userid" required>
+            <div class="invalid-feedback">
+                Please fill your username.
+            </div>
+        </div>
+        <div class="form-group" id="location">
+            <select autofocus class="form-control" name="location" required>
+                <option style="display: none;">Select location</option>
+                {% for location in locations %}
+                    <option>{{ location }}</option>
+                {% endfor %}
+            </select>
+            <div class="invalid-feedback">
+                Please select your location.
+            </div>
+        </div>
+        <div class="form-group" id="gender">
+            <p class="form-control" required>
+                <input name="gender" type="radio" value="male">male
+                <input name="gender" type="radio" value="female">female
+            </p>
+            <div class="invalid-feedback">
+                Please select your gender.
+            </div>
+        </div>
+        <div class="form-group" id="password">
+            <input class="form-control" name="password" placeholder="Password" type="password" required>
+            <div class="invalid-feedback">
+                Please fill your password.
+            </div>
+        </div>
+        <div class="form-group" id="confirm">
+            <input class="form-control" name="confirmation" placeholder="Confirm_Password" type="password" required>
+            <div class="invalid-feedback">
+                Please confirm your password.
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit" id="submitform">Register</button>
+    </form>
+{% endblock %}

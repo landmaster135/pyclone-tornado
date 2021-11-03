@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Wardrobe
+{% endblock %}
+
+{% block main %}
+    <h1>Add Wardrobe</h1>
+    <div>
+        <h5></h5>
+    </div>
+    <div class="outline">
+        <form action="/addedcloth" method="post" enctype="multipart/form-data" name="clothform">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="wardrobename" placeholder="Wardrobe name" type="text" value="" required>
+                <div class="invalid-feedback">
+                    Please provide wardrobe-name.
+                </div>
+            </div>
+            <div class="form-group">
+                <select autofocus class="form-control" name="category" required>
+                    <option style="display: none;">--Select Category--</option>
+                    {% for key, values in categories.items() %}
+                        <option disabled>{{ key }}</option>
+                        {% for category in values %}
+                            <option>{{ category }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                    <!--<option disabled>-Outer Category-</option>-->
+                    <!--{% for category in categories_o %}-->
+                    <!--    <option>{{ category }}</option>-->
+                    <!--{% endfor %}-->
+                    <!--<option disabled>-Tops Category-</option>-->
+                    <!--{% for category in categories_t %}-->
+                    <!--    <option>{{ category }}</option>-->
+                    <!--{% endfor %}-->
+                    <!--<option disabled>-Inner Category-</option>-->
+                    <!--{% for category in categories_i %}-->
+                    <!--    <option>{{ category }}</option>-->
+                    <!--{% endfor %}-->
+                    <!--<option disabled>-Bottoms Category-</option>-->
+                    <!--{% for category in categories_b %}-->
+                    <!--    <option>{{ category }}</option>-->
+                    <!--{% endfor %}-->
+                </select>
+                <div class="invalid-feedback">
+                    Please select wardrobe-category.
+                </div>
+            </div>
+            <div class="form-group" id="">
+                <select autofocus class="form-control" name="sleeve" required>
+                    <option style="display: none;">--Select Sleeve--</option>
+                    <option disabled>--Select Sleeve--</option>
+                    {% for sleeve in sleeves %}
+                        <option>{{ sleeve }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                    Please select sleeve-length.
+                </div>
+            </div>
+            <div class="form-group">
+                <select autofocus class="form-control" name="color" required>
+                    <option style="display: none;">--Select Color--</option>
+                    <option disabled>--Select Color--</option>
+                    {% for color in colors %}
+                        <option>{{ color }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                    Please select wardrobe-color.
+                </div>
+            </div>
+            <div class="form-group">
+                <!-- 9段階のスライダーで入力したい(暖かさ=w_score) -->
+                <label for="warmscore">How warm is the wardrobe? (cold < normal < warm)</label>
+                <input type="range" class="custom-range range-orange" min="1" max="9" step="1" value="1" id="warmscore" name="warmscore">
+                <output for="warmscore" class="output_w"></output>
+            </div>
+            <div class="form-group">
+                <!-- 7段階のスライダーで入力したい(1週間で着る頻度=freq_inweek) -->
+                <label for="freq_inweek">Wearing-frequency in a week? (1 ~ 7)</label>
+                <input type="range" class="custom-range range-orange" min="1" max="7" step="1" value="1" id="freq_inweek" name="freq_inweek">
+                <!-- 出てこない start -->
+                <!--<input type="range" class="custom-range" min="1" max="7" step="1" value="1" list="freq_inweek" name="freq_inweek">-->
+                <!--<datalist id="freq_inweek">-->
+                <!--    <option value="1" label="Once"></option>-->
+                <!--    <option value="2"></option>-->
+                <!--    <option value="3"></option>-->
+                <!--    <option value="4"></option>-->
+                <!--    <option value="5"></option>-->
+                <!--    <option value="6"></option>-->
+                <!--    <option value="7" label="EveryDay"></option>-->
+                <!--</datalist>-->
+                <!-- 出てこない end -->
+                <output for="freq_inweek" class="output_f"></output>
+            </div>
+            <div id="file-group" class="form-group">
+                <input type="file" id="image" name="image" accept="image/jpeg">
+                <label for="image" id="file-label"></label>
+            </div>
+            <div id="form-alert" class="form-group">
+                <span class="alert"></span>
+            </div>
+            <button class="button button-orange" type="submit" id="button-submit">Add Wardrobe</button>
+        </form>
+    </div>
+    <div class="outline">
+        <a href="/catalogcloth" class="button button-gray">Cancel</a>
+    </div>
+{% endblock %}
