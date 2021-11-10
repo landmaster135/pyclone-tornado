@@ -128,6 +128,11 @@ def DecideNowDir():
     '''
     nowDir = os.path.abspath(os.path.dirname(__file__))
     nowDirPath = filedialog.askdirectory(initialdir=nowDir)
+
+    # Discrimination whether Windows or Mac.
+    pf = platform.system()
+    if pf == 'Windows': # OS is Windows
+        nowDirPath = nowDirPath.replace('/', '\\')
     print("Folder's Absolutely Path: {quotation}{folderpath}{quotation}".format(quotation='"',folderpath=nowDirPath))
     return nowDirPath
 
