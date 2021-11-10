@@ -3,6 +3,7 @@
 
 import os, sys
 import cv2 # opencv 3.4.2
+import re # regular expression
 # IMPORT module FROM LandmasterLibrary
 import InputController
 import DirEditor
@@ -96,8 +97,15 @@ def TrimImage(trimmed_img_ext):
     '''
     fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),trimmed_img_ext)
 
+    # Error Handling
     if len(fileList) == 0:
         print('\nImageEditor exits because of no target files.')
+        sys.exit(0)
+
+    # Error Handling
+    checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
+    if checkStr.fullmatch(fileList[0]) == None:
+        print('\nImageEditor exits because of the directory containing shift-jis character.')
         sys.exit(0)
 
     selectTimes = input('What times do you choosing? ("1" or "every"): ')
@@ -106,13 +114,13 @@ def TrimImage(trimmed_img_ext):
     extracted_dir = DirEditor.MakeDirectory(fileList[0])
 
     for i in range(0, len(fileList)):
-        img = cv2.imread(fileList[i])
         if selectTimes == '1':
             if i == 0:
                 frameDict = SelectArea(fileList[i])
         elif selectTimes == 'every':
             frameDict = SelectArea(fileList[i])
         # img[top : bottom, left : right]
+        img = cv2.imread(fileList[i])
         trimmed_img      = img[frameDict['top'] : frameDict['bottom'], frameDict['left'] : frameDict['right']]
         trimmed_img_name = "image{num:0=3}.{trimmed_img_ext}".format(num=i,trimmed_img_ext=trimmed_img_ext)
         cv2.imwrite("{dirname}{sep}{trimmed_img_name}".format(dirname=extracted_dir,sep=sep,trimmed_img_name=trimmed_img_name), trimmed_img)
