@@ -3,7 +3,6 @@
 
 import os, sys
 import cv2 # opencv 3.4.2
-import re # regular expression
 # IMPORT module FROM LandmasterLibrary
 import InputController
 import DirEditor
@@ -87,13 +86,14 @@ def SelectArea(filename):
 
 def TrimImage(trimmed_img_ext):
     '''
-    folderList       : List of file filtered with extension in the selected folder.
-    selectTimes      : String of times to input.
-    extracted_dir    : String absolutely path of directory has selected file.
-    img              : Dictionary of pixels of image. (img [height] [width] [color channel])
-    trimmed_img      : Dictionary of pixels of image.
-    trimmed_img_ext : String of extension of trimmed_img.
-    trimmed_img_name : String of filename of trimmed_img.
+    fileList                 : List of file filtered with extension in the selected folder.
+    basefilename_without_ext : String name of base file without extension.
+    selectTimes              : String of times to input.
+    extracted_dir            : String absolutely path of directory has selected file.
+    img                      : Dictionary of pixels of image. (img [height] [width] [color channel])
+    trimmed_img              : Dictionary of pixels of image.
+    trimmed_img_ext          : String of extension of trimmed_img.
+    trimmed_img_name         : String of filename of trimmed_img.
     '''
     fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),trimmed_img_ext)
 
@@ -103,10 +103,13 @@ def TrimImage(trimmed_img_ext):
         sys.exit(0)
 
     # Error Handling
-    checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
-    if checkStr.fullmatch(fileList[0]) == None:
-        print('\nImageEditor exits because of the directory containing shift-jis character.')
+    basefilename_without_ext = os.path.splitext(os.path.basename(__file__))[0]
+    if InputController.CheckerWhetherSjisExists(fileList[0], basefilename_without_ext) == True:
         sys.exit(0)
+    # checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
+    # if checkStr.fullmatch(fileList[0]) == None:
+    #     print('\nImageEditor exits because of the directory containing shift-jis character.')
+
 
     selectTimes = input('What times do you choosing? ("1" or "every"): ')
     while selectTimes != '1' and selectTimes != 'every':
@@ -256,11 +259,17 @@ def ExtractImage(video_name):
     fps           : Integer number of fps of selected video
     num_of_image  : Integer number of extracted images from video
     '''
+    # Error Handling
     if video_name == '':
         print("ERROR: No file is selected.")
         sys.exit(0)
 
     extracted_dir = DirEditor.MakeDirectory(video_name)
+
+    # Error Handling
+    basefilename_without_ext = os.path.splitext(os.path.basename(__file__))[0]
+    if InputController.CheckWhetherSjisExists(extracted_dir, basefilename_without_ext) == True:
+        sys.exit(0)
 
     cap = cv2.VideoCapture(video_name)
     # width
@@ -289,15 +298,15 @@ def main():
     # SelectArea(DirEditor.DecideNowFile(list_of_ext))
 
     # # test code for TrimImage()
-    TrimImage('jpg')
+    # TrimImage('jpg')
 
     # test code for RemoveDuplication()
     # fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
     # RemoveDuplication(fileList)
 
     # # test code for ExtractImage()
-    # list_of_ext = ["mp4"]
-    # ExtractImage(DirEditor.DecideNowFile(list_of_ext))
+    list_of_ext = ["mp4"]
+    ExtractImage(DirEditor.DecideNowFile(list_of_ext))
 
 if __name__ == "__main__":
     main()

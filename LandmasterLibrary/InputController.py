@@ -2,6 +2,19 @@
 # code in shift-jis
 
 import os, sys
+import re # regular expression
+
+def CheckWhetherSjisExists(targetStr, callingfilename_without_ext):
+    '''
+    targetStr                : String target for check.
+    basefilename_without_ext : String name of calling file without extension.
+    checkStr                 : String filter for check.
+    '''
+    checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
+    if checkStr.fullmatch(targetStr) == None:
+        print('\n{} exits because of the directory containing shift-jis character.'.format(callingfilename_without_ext))
+        return True
+    return False
 
 def RepeatInputWithMultiChoices(firstMessage, choiceList=[]):
     '''
