@@ -10,6 +10,8 @@ def CheckWhetherSjisExists(targetStr, callingfilename_without_ext):
     basefilename_without_ext : String name of calling file without extension.
     checkStr                 : String filter for check.
     '''
+    print("targetStr:   " + targetStr)
+    print("callingfilename_without_ext:   " + callingfilename_without_ext)
     checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
     if checkStr.fullmatch(targetStr) == None:
         print('\n{} exits because of the directory containing shift-jis character.'.format(callingfilename_without_ext))

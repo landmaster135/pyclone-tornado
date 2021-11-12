@@ -52,6 +52,11 @@ def SelectArea(filename):
     sliderLeft   = Slider(axLeft, 'Left', 0, width/2 - 1, valinit=0, valstep=delta_f)
     sliderRight  = Slider(axRight, 'Right', 0, width/2 - 1, valinit=0, valstep=delta_f)
 
+    top    = sliderTop.val
+    bottom = height - sliderBottom.val
+    left   = sliderLeft.val
+    right  = width - sliderRight.val
+
     def update(val):
         '''
         top    : String number of y-coordinate of top (global variable)
@@ -59,10 +64,6 @@ def SelectArea(filename):
         left   : String number of x-coordinate of left (global variable)
         right  : String number of x-coordinate of right (global variable)
         '''
-        global top
-        global bottom
-        global left
-        global right
         top    = sliderTop.val
         bottom = height - sliderBottom.val
         left   = sliderLeft.val
@@ -104,7 +105,7 @@ def TrimImage(trimmed_img_ext):
 
     # Error Handling
     basefilename_without_ext = os.path.splitext(os.path.basename(__file__))[0]
-    if InputController.CheckerWhetherSjisExists(fileList[0], basefilename_without_ext) == True:
+    if InputController.CheckWhetherSjisExists(fileList[0], basefilename_without_ext) == True:
         sys.exit(0)
     # checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
     # if checkStr.fullmatch(fileList[0]) == None:
@@ -115,6 +116,10 @@ def TrimImage(trimmed_img_ext):
     while selectTimes != '1' and selectTimes != 'every':
         selectTimes = input('Retry. ("1" or "every"): ')
     extracted_dir = DirEditor.MakeDirectory(fileList[0])
+
+    # Error Handling
+    if InputController.CheckWhetherSjisExists(extracted_dir, basefilename_without_ext) == True:
+        sys.exit(0)
 
     for i in range(0, len(fileList)):
         if selectTimes == '1':
@@ -297,16 +302,16 @@ def main():
     # list_of_ext = ["jpg"]
     # SelectArea(DirEditor.DecideNowFile(list_of_ext))
 
-    # # test code for TrimImage()
-    # TrimImage('jpg')
+    # test code for TrimImage()
+    TrimImage('jpg')
 
     # test code for RemoveDuplication()
     # fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
     # RemoveDuplication(fileList)
 
     # # test code for ExtractImage()
-    list_of_ext = ["mp4"]
-    ExtractImage(DirEditor.DecideNowFile(list_of_ext))
+    # list_of_ext = ["mp4"]
+    # ExtractImage(DirEditor.DecideNowFile(list_of_ext))
 
 if __name__ == "__main__":
     main()
