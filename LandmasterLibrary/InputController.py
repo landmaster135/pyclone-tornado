@@ -4,17 +4,24 @@
 import os, sys
 import re # regular expression
 
-def CheckWhetherSjisExists(targetStr, callingfilename_without_ext):
+def CheckWhetherSjisExists(targetStrList, callingfilename_with_ext):
     '''
-    targetStr                : String target for check.
-    basefilename_without_ext : String name of calling file without extension.
+    targetStrList            : String List target for check.
+    callingfilename_with_ext : String absolutely name of calling file with extension
     checkStr                 : String filter for check.
+    isSjisContained          : Boolean.
+    basefilename_without_ext : String name of calling file without extension.
     '''
-    print("targetStr:   " + targetStr)
-    print("callingfilename_without_ext:   " + callingfilename_without_ext)
     checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
-    if checkStr.fullmatch(targetStr) == None:
-        print('\n{} exits because of the directory containing shift-jis character.'.format(callingfilename_without_ext))
+    isSjisContained = False
+    for i in targetStrList:
+        if checkStr.fullmatch(i) == None:
+            isSjisContained = True
+        print('\nCheckWhetherSjisExists : targetStr is "{}" ・・・・・・ isSjisContained == {}'.format(i, isSjisContained))
+
+    basefilename_without_ext = os.path.splitext(os.path.basename(callingfilename_with_ext))[0]
+    if isSjisContained == True:
+        print('\n\n{} exits because of the directory containing shift-jis character.'.format(basefilename_without_ext))
         return True
     return False
 
@@ -53,13 +60,20 @@ def RepeatInputWithMultiChoices(firstMessage, choiceList=[]):
         if inputChr == '':
             pass
         else:
-            if choiceList == []:
-                isInputCorrect = True
-            else:
-                for choice in choiceList:
-                    if inputChr == choice:
-                        isInputCorrect = True
-                        break
+            if type(choiceList[0]) is int:
+                if int(inputChr) >= 0 and int(inputChr) <= 100:
+                    isInputCorrect = True
+                    inputChr = int(inputChr)
+                else:
+                    pass
+            elif type(choiceList[0]) is str:
+                if choiceList == []:
+                    isInputCorrect = True
+                else:
+                    for choice in choiceList:
+                        if inputChr == choice:
+                            isInputCorrect = True
+                            break
         isFirstInput = False
     return inputChr
 

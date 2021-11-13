@@ -52,6 +52,7 @@ def SelectArea(filename):
     sliderLeft   = Slider(axLeft, 'Left', 0, width/2 - 1, valinit=0, valstep=delta_f)
     sliderRight  = Slider(axRight, 'Right', 0, width/2 - 1, valinit=0, valstep=delta_f)
 
+    # image size before trimming
     top    = sliderTop.val
     bottom = height - sliderBottom.val
     left   = sliderLeft.val
@@ -64,6 +65,7 @@ def SelectArea(filename):
         left   : String number of x-coordinate of left (global variable)
         right  : String number of x-coordinate of right (global variable)
         '''
+        global top
         top    = sliderTop.val
         bottom = height - sliderBottom.val
         left   = sliderLeft.val
@@ -80,6 +82,12 @@ def SelectArea(filename):
     sliderLeft.on_changed(update)
     sliderRight.on_changed(update)
     plt.show()
+
+    # image size after trimming
+    top    = sliderTop.val
+    bottom = height - sliderBottom.val
+    left   = sliderLeft.val
+    right  = width - sliderRight.val
 
     frameDict = {'top': int(top), 'bottom': int(bottom), 'left': int(left), 'right': int(right)}
     print("FrameSize for trimming is ", frameDict)
@@ -103,22 +111,15 @@ def TrimImage(trimmed_img_ext):
         print('\nImageEditor exits because of no target files.')
         sys.exit(0)
 
-    # Error Handling
-    basefilename_without_ext = os.path.splitext(os.path.basename(__file__))[0]
-    if InputController.CheckWhetherSjisExists(fileList[0], basefilename_without_ext) == True:
-        sys.exit(0)
-    # checkStr = re.compile('[\\a-zA-Z0-9\-\_\.\-\s\:\~\^\=]+')
-    # if checkStr.fullmatch(fileList[0]) == None:
-    #     print('\nImageEditor exits because of the directory containing shift-jis character.')
+    # selectTimes = input('What times do you choosing? ("1" or "every"): ')
+    # while selectTimes != '1' and selectTimes != 'every':
+    #     selectTimes = input('Retry. ("1" or "every"): ')
+    selectTimes = InputController.RepeatInputWithMultiChoices('\nWhat times do you choosing? ("1" or "every"): ', ['1', 'every'])
 
-
-    selectTimes = input('What times do you choosing? ("1" or "every"): ')
-    while selectTimes != '1' and selectTimes != 'every':
-        selectTimes = input('Retry. ("1" or "every"): ')
     extracted_dir = DirEditor.MakeDirectory(fileList[0])
 
     # Error Handling
-    if InputController.CheckWhetherSjisExists(extracted_dir, basefilename_without_ext) == True:
+    if InputController.CheckWhetherSjisExists([fileList[0], extracted_dir], __file__) == True:
         sys.exit(0)
 
     for i in range(0, len(fileList)):
@@ -217,17 +218,21 @@ def RemoveDuplication(folderList):
     match_rate    : Float rate
     border_line   : border line
     '''
-    border_line = 70
-
     if len(folderList) == 0:
         print('\nImageEditor exits because of no target files.')
         sys.exit(0)
 
     extracted_dir = os.path.dirname(folderList[0])
-    # Decide to remove or don't
-    isRmoveMode = InputController.RepeatInputWithMultiChoices('You wanna remove files in condition? (y/n)', ['y', 'n'])
 
-    assessMode = 'a'
+    # Error Handling
+    if InputController.CheckWhetherSjisExists([folderList[0], extracted_dir], __file__) == True:
+        sys.exit(0)
+
+    # Decide to remove or don't
+    executeMode = InputController.RepeatInputWithMultiChoices('\nYou wanna Remove or Assessment overlapped images? (R/A)', ['R', 'A'])
+
+    assessMode = 'N'
+    border_line = 70
     listForText = []
     # compare both image to remove img1 or not
     for i in range(0, len(folderList) - 1):
@@ -235,16 +240,26 @@ def RemoveDuplication(folderList):
         imgName2 = os.path.splitext(os.path.basename(folderList[i+1]))[0]
         # Decide method of assessment
         while assessMode != 'F' and assessMode != 'P':
-            assessMode = input('Which method to assess?\n[ F: FeaturePoint, P: PixelMatch ] : ')
+            assessMode = InputController.RepeatInputWithMultiChoices('\nWhich method to assess?\n[ F: FeaturePoint, P: PixelMatch ] : ', ['F', 'P'])
+            if executeMode == 'R':
+                if assessMode == 'F':
+                    border_line = InputController.RepeatInputWithMultiChoices('How many matches are required not to remove? : ', [0, 100])
+                elif assessMode == 'P':
+                    border_line = InputController.RepeatInputWithMultiChoices('How many matches are required to remove? : ', [0, 100])
+            elif executeMode == 'S':
+                pass
+        # do assessment
         if assessMode == 'F':
             match_rate = JudgeMatchRateByFeaturePoint(folderList[i], folderList[i+1])
+            match_rate = int(match_rate * 100)
             print('degree of similarity between "{imgName1}" and "{imgName2}" is {rate}'.format(imgName1=imgName1,imgName2=imgName2,rate=match_rate))
         elif assessMode == 'P':
             match_rate = JudgeMatchRateByPixelMatch(folderList[i], folderList[i+1])
+            match_rate = int(match_rate * 100)
             print('match rate between "{imgName1}" and "{imgName2}" is {rate}'.format(imgName1=imgName1,imgName2=imgName2,rate=match_rate))
         listForText.append('"{imgName1}" and "{imgName2}" is {rate}'.format(imgName1=imgName1,imgName2=imgName2,rate=match_rate))
         # Remove files
-        if isRmoveMode == 'y':
+        if executeMode == 'R':
             if assessMode == 'F':
                 if match_rate <= border_line:
                     os.remove(folderList[i])
@@ -272,8 +287,7 @@ def ExtractImage(video_name):
     extracted_dir = DirEditor.MakeDirectory(video_name)
 
     # Error Handling
-    basefilename_without_ext = os.path.splitext(os.path.basename(__file__))[0]
-    if InputController.CheckWhetherSjisExists(extracted_dir, basefilename_without_ext) == True:
+    if InputController.CheckWhetherSjisExists([video_name, extracted_dir], __file__) == True:
         sys.exit(0)
 
     cap = cv2.VideoCapture(video_name)
@@ -303,13 +317,13 @@ def main():
     # SelectArea(DirEditor.DecideNowFile(list_of_ext))
 
     # test code for TrimImage()
-    TrimImage('jpg')
+    # TrimImage('jpg')
 
     # test code for RemoveDuplication()
-    # fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
-    # RemoveDuplication(fileList)
+    fileList = FileListGetter.GetFileList(DirEditor.DecideNowDir(),'jpg')
+    RemoveDuplication(fileList)
 
-    # # test code for ExtractImage()
+    # test code for ExtractImage()
     # list_of_ext = ["mp4"]
     # ExtractImage(DirEditor.DecideNowFile(list_of_ext))
 
