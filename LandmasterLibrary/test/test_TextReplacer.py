@@ -10,10 +10,12 @@ class Test_ReplaceCharacter:
         replaceCharacter = ReplaceCharacter()
         assert replaceCharacter.MakeVoicedsound('だぢづでどばびぶべぼ') == 'だぢづてどばびぶべぼ'
 
+    # Unicode : \u309A
     def test_MakeVoicedsound_1_3(self):
         replaceCharacter = ReplaceCharacter()
         assert replaceCharacter.MakeVoicedsound('ぱぴぷぺぽ') == 'ぱぴぷぺぽ'
 
+    # Unicode : \u3099
     def test_MakeVoicedsound_1_4(self):
         replaceCharacter = ReplaceCharacter()
         assert replaceCharacter.MakeVoicedsound('ガギグゲゴザジズゼゾ') == 'ガギグゲゴザジズゼゾ'
