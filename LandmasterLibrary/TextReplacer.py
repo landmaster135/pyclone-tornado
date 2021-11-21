@@ -4,8 +4,8 @@ class ReplaceCharacter:
         text           : String of target text.
         replace_hyphen : String of capital to replace.
         """
-        target  = 'がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ'
-        replace = 'がぎぐげござじずぜぞだぢづてどばびぶべぼぱぴぷぺぽ'
+        target  = 'がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ'
+        replace = 'がぎぐげござじずぜぞだぢづてどばびぶべぼぱぴぷぺぽガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ'
         list_target  = []
         list_replace = []
         for i in range(0, len(target), 2):
