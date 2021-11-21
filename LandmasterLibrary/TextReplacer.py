@@ -1,6 +1,6 @@
 class ReplaceCharacter:
     def MakeVoicedsound(self, text):
-        """全ての横棒を半角ハイフンに置換する
+        """
         text           : String of target text.
         """
         target  = 'がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ'
