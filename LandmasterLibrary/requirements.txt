@@ -1,3 +1,0 @@
-janome==0.4.1
-tkinter
-opencv-python
