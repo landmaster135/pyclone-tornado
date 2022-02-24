@@ -5,9 +5,9 @@ import cv2
 # Library in the local
 
 args = sys.argv
+targetImage = args[1]
 
-
-image = cv2.imread('sample_img.jpg')
+image = cv2.imread(targetImage)
 
 cascade_file = 'haarcascade_frontalface_alt2.xml'
 cascade_face = cv2.CascadeClassifier(cascade_file)
