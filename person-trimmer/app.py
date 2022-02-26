@@ -20,5 +20,9 @@ for (x, y, w, h) in face_list:
 
     border_size = 2
     cv2.rectangle(image, (x, y), (x+w, y+h), border_color, thickness=border_size)
+    cv2.imwrite('frame' + str(i+1) + '.jpg', image)
+    
+    trim = image[y: y+h, x: x+w]
+    cv2.imwrite('cut' + str(i+1) + '.jpg', trim)
 
-cv2.imwrite('out.jpg', image)
+
